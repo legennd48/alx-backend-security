@@ -129,3 +129,58 @@ CACHES = {
         'LOCATION': '/tmp/django_cache',
     }
 }
+
+# Rate limiting configuration
+RATELIMIT_ENABLE = True
+RATELIMIT_USE_CACHE = 'default'
+
+# Optional: Configure rate limit view (for when limits are exceeded)
+RATELIMIT_VIEW = 'ip_tracking.views.ratelimited'
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+# Celery Beat Schedule (for periodic tasks)
+CELERY_BEAT_SCHEDULE = {
+    'detect-suspicious-activity': {
+        'task': 'ip_tracking.tasks.detect_suspicious_activity',
+        'schedule': 3600.0,  # Run every hour (3600 seconds)
+    },
+    'cleanup-old-logs': {
+        'task': 'ip_tracking.tasks.cleanup_old_logs',
+        'schedule': 86400.0,  # Run daily (86400 seconds)
+    },
+    'generate-security-report': {
+        'task': 'ip_tracking.tasks.generate_security_report',
+        'schedule': 21600.0,  # Run every 6 hours
+    },
+}
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'security.log',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'ip_tracking.tasks': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

@@ -1,0 +1,8 @@
+Starting anomaly detection for period: 2025-07-18 18:09:27.560285+00:00 to 2025-07-18 19:09:27.560285+00:00
+Anomaly detection completed
+Security report generated: {'suspicious_ips': 0, 'requests_last_24h': 323, 'timestamp': '2025-07-18T19:22:10.539973+00:00'}
+Starting anomaly detection for period: 2025-07-18 18:23:13.080646+00:00 to 2025-07-18 19:23:13.080646+00:00
+Flagged suspicious IP: 192.168.1.100 - High volume: 315 requests in 1 hour
+Flagged suspicious IP: 192.168.1.100 - Sensitive path access: 315 requests to /admin
+Anomaly detection completed
+Security report generated: {'suspicious_ips': 2, 'requests_last_24h': 323, 'timestamp': '2025-07-18T19:23:13.857683+00:00'}
